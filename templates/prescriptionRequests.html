@@ -1,0 +1,111 @@
+
+{% block content %} 
+<style>
+body {
+    background-color: #e6f2ff; 
+    color: #000000; 
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+h1 {
+    color: darkblue; 
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid darkblue; 
+    padding: 10px;
+}
+th {
+    background-color: darkblue;
+    color: #ffffff; 
+}
+tr:nth-child(even) {
+    background-color: #e6f2ff; 
+}
+
+.navbar {
+      background-color: darkblue;
+      overflow: hidden;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .navbar a {
+      float: left;
+      color: white;
+      text-align: center;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: normal;
+      transition:  0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: lightblue;
+      color: black;
+    }
+
+    .navbar a.active {
+      font-weight: bold;
+      color: lightblue;
+    }
+
+
+    img {
+      border: 5px solid darkblue;
+    }
+
+    
+</style>
+<body>
+    <div class="navbar" style="margin-left: 20px; margin-top: 20px;">
+        <a href="{{url_for('prescriptionRequests')}}" style="margin-left:10px; margin-right: 10px">Prescription Requests</a>
+        <a href="{{url_for('sendpre')}}"style="margin-left:10px; margin-right: 10px">Send Prescription</a>
+        <a href="{{url_for('logout')}}"style="margin-left:10px; margin-right: 10px">Log out</a>
+        </div>
+    
+  
+
+    <div class="container">
+        <h1>Prescription Requests</h1>
+         <table class="worddark">
+            <tr>
+                <th>Patient Name</th>
+                <th>Medication</th>
+                <th>Dosage</th>
+                <th>Request Date</th>
+                <th>Sign Name for Approval</th>
+            </tr>
+            {% for pend in pend %}
+            <tr>
+                <td>{{ pend['patientName'] }}</td>
+                <td>{{ pend['prescriptionName'] }}</td>
+                <td>{{ pend['prescriptionDosage'] }}</td>
+                <td>{{ pend['prescriptionDate'] }}</td>
+                <td style="padding-left: 10px; padding-top: 10px;"><form>
+                    <input type="text" id="signature" name="signature">
+                    <input type="submit" class="btn" value="accept">
+                </form></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+
+    </body>
+      
+
+{% endblock %}

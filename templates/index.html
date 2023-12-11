@@ -1,0 +1,24 @@
+ 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Pharmalytics </title>
+    </head>
+    <body></br></br></br></br></br>
+        <div align="center">
+          <div align="center" class="border">
+             <div class="header">
+                <h1 class="word">Pharmalytics</h1>
+             </div></br></br></br>
+                <h1 class="bottom">
+                    {{ msg}}!!</br></br>                 
+                </h1></br></br></br>
+                <a href="{{ url_for('patientlogin')}}" class="btn">Patient Login</a>
+                <a href="{{ url_for('doctorlogin')}}" class="btn">Doctor Login</a>
+                <a href="{{ url_for('pharmacylogin')}}" class="btn">Pharmacy Login</a>
+                
+          </div>
+          <div>Don't have an account? <a href="{{ url_for('register')}}" class="btn">Register</a></div>
+        </div>
+    </body>
+</html>

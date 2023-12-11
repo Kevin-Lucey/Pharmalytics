@@ -1,0 +1,61 @@
+
+{% block content %} 
+<style>
+    body {
+        background-color: #e6f2ff; 
+        color: #000000; 
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 60%;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+    h1 {
+            color: darkblue; 
+        }
+    form {
+        margin-top: 20px;
+        text-align: left;
+    }
+    input[type="text"], textarea {
+        width: 20%;
+        padding: 10px;
+        margin: 5px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #0000ff;
+        color: #ffffff; 
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #0000cc; 
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h2>Add Patient</h2>
+        <div class="addbottom">
+            <form action="{{ url_for('AddPatient')}}" method="post" autocomplete="off">
+                <div class="msg">{{ msg }}</div>
+                <input type="text" name="Name" placeholder="Name" class="textbox" id="Name" required>
+                <input type="text" name="DateOfBirth" placeholder="Date Of Birth" class="textbox" id="DateOfBirth" required>
+                <input type="text" name="gender" placeholder="Gender" class="textbox" id="gender" required>
+                <input type="text" name="insuranceid" placeholder="Insurance ID" class="textbox" id="insuranceid" required>
+                <input type="Submit" class="btn" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}

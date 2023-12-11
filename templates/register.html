@@ -1,0 +1,71 @@
+
+{% block content %}
+<style>
+    body {
+        background-color: #e6f2ff; 
+        color: #000000; 
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 60%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h1 {
+        color: darkblue; 
+    }
+    form {
+        margin-top: 20px;
+        text-align: left;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 20%;
+        padding: 10px;
+        margin: 5px 0;
+        display: block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin: 0 auto; 
+    }
+    input[type="submit"] {
+        background-color: #0000ff;
+        color: #ffffff; 
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block; /* To center the submit button */
+        margin: 0 auto; /* Centering the button */
+    }
+    input[type="submit"]:hover {
+        background-color: #0000cc; 
+    }
+    .registercontent {
+        text-align: center; /* Centering content within the container */
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="registercontent">
+            <div class="registertop">
+                <h1>Register</h1>
+            </div></br></br>
+            <div class="registerbottom">
+                <form action="{{ url_for('register')}}" method="post" autocomplete="off">
+                    <div class="msg">{{ msg }}</div>
+                    <input type="text" name="username" placeholder="Enter Your Username" class="textbox" id="username" required></br></br>
+                    <input type="password" name="password" placeholder="Enter Your Password" class="textbox" id="password" required></br></br>
+                    <input type="text" name="personaCode" placeholder="Enter Your Persona Code" class="textbox" id="personaCode" required></br></br>
+                    <input type="submit" class="btn" value="Register">
+                </form>
+                <p class="worddark">Already have an account? <a class="worddark" href="{{ url_for('index')}}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

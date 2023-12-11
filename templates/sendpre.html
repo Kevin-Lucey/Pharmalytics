@@ -1,0 +1,109 @@
+
+{% block content %} 
+<style>
+body {
+    background-color: #e6f2ff; 
+    color: #000000; 
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+h1 {
+    color: darkblue; 
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid darkblue; 
+    padding: 10px;
+}
+th {
+    background-color: darkblue;
+    color: #ffffff; 
+}
+tr:nth-child(even) {
+    background-color: #e6f2ff; 
+}
+
+.navbar {
+      background-color: darkblue;
+      overflow: hidden;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .navbar a {
+      float: left;
+      color: white;
+      text-align: center;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: normal;
+      transition:  0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: lightblue;
+      color: black;
+    }
+
+    .navbar a.active {
+      font-weight: bold;
+      color: lightblue;
+    }
+
+
+    img {
+      border: 5px solid darkblue;
+    }
+
+    
+</style>
+<body>
+
+  
+
+    <div class="container">
+        <h1>Prescription Order</h1>
+         <table class="worddark">
+            <tr>
+                <th>Patient Name</th>
+                <th>Patient Date Of Birth</th>
+                <th>Gender</th>
+                <th>Insurance ID</th>
+                <th>Medication</th>
+                <th>Strength</th>
+                <th>Quantity</th>
+                <th>Instructions</th>
+            </tr>
+            {% for prescription in prescription %}
+            <tr>
+                <td>{{ prescription['patientName'] }}</td>
+                <td>{{ prescription['patientDateOfBirth'] }}</td>
+                <td>{{ prescription['gender'] }}</td>
+                <td>{{ prescription['insuranceid'] }}</td>
+                <td>{{ prescription['medication'] }}</td>
+                <td>{{ prescription['strength'] }}</td>
+                <td>{{ prescription['quantity'] }}</td>
+                <td>{{ prescription['instructions'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+
+    </body>
+      
+
+{% endblock %}

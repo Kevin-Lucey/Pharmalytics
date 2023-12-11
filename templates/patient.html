@@ -1,0 +1,80 @@
+
+{% block content %} 
+    <style>
+        body {
+            background-color: #e6f2ff; 
+            color: #000000; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: darkblue; 
+        }
+        h2 {
+            color: darkblue; 
+        }
+        form {
+            margin-top: 20px;
+            text-align: left;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #0000ff; 
+            color: #ffffff; 
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0000ff; 
+        }
+        .information {
+            background-color: #65abf7;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-top: 20px;margin-left: 20px; text-decoration: underline;"><h2>Welcome, {{ account['patientName']}}</h2></div>
+    <div class="container">
+        <h2>Request Medication</h2>
+        <div class="addbottom">
+            <form action="{{ url_for('patient')}}" method="post" autocomplete="off">
+                <div class="msg">{{ msg }}</div>
+                <input type="text" name="patientName" placeholder="Patient Name" class="textbox" id="patientName" required>
+                <input type="text" name="medication" placeholder="Medication" class="textbox" id="medication" required>
+                <input type="text" name="quantity" placeholder="Quantity" class="textbox" id="quantity" required>
+                <input type="text" name="insuranceid" placeholder="Insurance ID" class="textbox" id="insuranceid" required>
+                <input type="Submit" class="btn" value="Submit">
+            </form>
+        </div>
+        <div class="information">
+            <h2>Call your Pharmacy with any questions about your medication</h2>
+            <p>Your pharmacy is open 24 hours</p>
+        
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
+
+
