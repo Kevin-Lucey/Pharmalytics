@@ -74,31 +74,33 @@ tr:nth-child(even) {
   
 
     <div class="container">
-        <h1>Prescription Order</h1>
+        <h1>Approved Prescriptions to be filled: </h1>
+        {{ msg}}
          <table class="worddark">
             <tr>
-                <th>Patient Name</th>
-                <th>Patient Date Of Birth</th>
-                <th>Gender</th>
-                <th>Insurance ID</th>
-                <th>Medication</th>
-                <th>Strength</th>
-                <th>Quantity</th>
-                <th>Instructions</th>
+                <th>Prescription Name</th>
+                <th>Dosage</th>
+                <th>Patient ID #</th>
+                <th>Doctor ID #</th>
+                <th>Prescription Date</th>
+                <th>Prescription ID #</th>
             </tr>
-            {% for prescription in prescription %}
+            {% for need in need %}
             <tr>
-                <td>{{ prescription['patientName'] }}</td>
-                <td>{{ prescription['patientDateOfBirth'] }}</td>
-                <td>{{ prescription['gender'] }}</td>
-                <td>{{ prescription['insuranceid'] }}</td>
-                <td>{{ prescription['medication'] }}</td>
-                <td>{{ prescription['strength'] }}</td>
-                <td>{{ prescription['quantity'] }}</td>
-                <td>{{ prescription['instructions'] }}</td>
+                <td>{{ need['prescriptionName'] }}</td>
+                <td>{{ need['prescriptionDosage'] }}</td>
+                <td>{{ need['patientID'] }}</td>
+                <td>{{ need['doctorID'] }}</td>
+                <td>{{ need['prescriptionDate'] }}</td>
+                <td>{{ need['prescriptionID'] }}</td>
             </tr>
             {% endfor %}
         </table>
+        <h3>Enter prescription ID to fill</h3>
+        <form action="{{ url_for('fillPrescription')}}" method="post" autocomplete="off">
+            <input type="text" id="prescription_id" name="prescription_id">
+            <input type="Submit" class="btn" value="Submit">
+        </form>
     </div>
 
 

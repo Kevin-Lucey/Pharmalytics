@@ -50,39 +50,27 @@
 <body>
     <div class="navbar" style="margin-left: 20px; margin-top: 20px;">
         <a href="{{url_for('prescriptionRequests')}}" style="margin-left:10px; margin-right: 10px">Prescription Requests</a>
-        <a href="{{url_for('sendpre')}}"style="margin-left:10px; margin-right: 10px">Send Prescription</a>
         <a href="{{url_for('logout')}}"style="margin-left:10px; margin-right: 10px">Log out</a>
         </div>
-    
+        
         
         
     <header>
-        <h1>Welcome to Doctor's Portal</h1>
+        <h1 style="width: 100%; text-align: center;">Welcome to Doctor's Portal</h1>
     </header>
-    <h1>Your Patients</h1>
-    <table class="worddark">
-       <tr>
-           <th>Patient Name</th>
-           <th>Medication</th>
-           <th>Dosage</th>
-           <th>Request Date</th>
-           <th>Sign Name for Approval</th>
-       </tr>
-       {% for res in res %}
-       <tr>
-           <td>{{ pend['patientName'] }}</td>
-           <td>{{ pend['prescriptionName'] }}</td>
-           <td>{{ pend['prescriptionDosage'] }}</td>
-           <td>{{ pend['prescriptionDate'] }}</td>
-           <td style="padding-left: 10px; padding-top: 10px;"><form>
-               <input type="text" id="signature" name="signature">
-               <input type="submit" class="btn" value="accept">
-           </form></td>
-       </tr>
-       {% endfor %}
-   </table>
-
-  
+    <h1 style="margin-left: 25px;">Your Patients</h1>
+    <table class="worddark" style="margin-left: 25px;">
+        <tr>
+            <th>Patient Name</th>
+        </tr>
+        {% for res in res %}
+        <tr>
+            <td>{{ res['patientName'] }}</td>
+        </tr>
+        {% endfor %}
+     </table>
+    <h3 style="margin-left: 25px">{{ msg}}</h3>
+    
 </body>
 
 {% endblock %}

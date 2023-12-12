@@ -73,19 +73,19 @@ tr:nth-child(even) {
 <body>
 
     <div class="navbar">
-        <a href="/AddPatient">Add Patient</a>
-        <a href="/Inventory">Medication Order</a>
-        <a href="/insurance">Insurance</a>
-        <a href="/listpatient">List Patient</a>
-        <a href="/sendpre">Prescription Order</a>
-        <a href="/display">Medication Request</a>
-        <a href="/inventorylist">Drug Inventory</a>
+        <a href="{{ url_for('listpatient')}}">List Patient</a>
+        <a href="{{ url_for('fillPrescription')}}">Fill Prescription</a>
+        <a href="{{ url_for('inventory')}}">Drug Inventory</a>
+        <a href="{{ url_for('logout')}}">Log out</a>
+
         </div>
 
     <div>
         
     </div>
-        
+    <div style="margin: 25px;">
+        <h2>Welcome, select option above</h2>
+    </div>
     </body>
       
 

@@ -53,16 +53,33 @@
     </style>
 </head>
 <body>
+    <div><a href='{{ url_for("logout")}}'>Log Out</a></div>
     <div style="margin-top: 20px;margin-left: 20px; text-decoration: underline;"><h2>Welcome, {{ account['patientName']}}</h2></div>
     <div class="container">
+        <h1>Your Prescriptions</h1>
+        <table class="worddark" style="width: 100%; text-align: center;">
+           <tr>
+               <th>Medication</th>
+               <th>Dosage</th>
+               <th>Date</th>
+               <th>Approval</th>
+           </tr>
+           {% for prescriptions in prescriptions %}
+           <tr>
+               <td>{{ prescriptions['prescriptionName'] }}</td>
+               <td>{{ prescriptions['prescriptionDosage'] }}</td>
+               <td>{{ prescriptions['prescriptionDate'] }}</td>
+               <td>{{ prescriptions['approved']}}</td>
+           </tr>
+           {% endfor %}
+        </table>
         <h2>Request Medication</h2>
         <div class="addbottom">
             <form action="{{ url_for('patient')}}" method="post" autocomplete="off">
                 <div class="msg">{{ msg }}</div>
-                <input type="text" name="patientName" placeholder="Patient Name" class="textbox" id="patientName" required>
                 <input type="text" name="medication" placeholder="Medication" class="textbox" id="medication" required>
+                <input type="text" name="dosage" placeholder="Dosage" class="textbox" id="dosage" required>
                 <input type="text" name="quantity" placeholder="Quantity" class="textbox" id="quantity" required>
-                <input type="text" name="insuranceid" placeholder="Insurance ID" class="textbox" id="insuranceid" required>
                 <input type="Submit" class="btn" value="Submit">
             </form>
         </div>

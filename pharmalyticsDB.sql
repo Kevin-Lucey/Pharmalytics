@@ -1,6 +1,7 @@
-drop database Pharmalytics;
+drop database IF EXISTS Pharmalytics;
 create database if not exists Pharmalytics;
 use Pharmalytics;
+
 
 
 ## Creating the user login table
@@ -55,7 +56,6 @@ CREATE TABLE IF NOT EXISTS medicationInfo(
     pharmaCompany varchar(30)
 );
 
-#drop table if exists prescriptionInfo;
 CREATE TABLE IF NOT EXISTS prescriptionInfo(
 	prescriptionID  int auto_increment NOT NULL primary key,
     prescriptionName varchar(30) NOT NULL,
@@ -63,13 +63,17 @@ CREATE TABLE IF NOT EXISTS prescriptionInfo(
     prescriptionDate date NOT NULL,
     patientID int NOT NULL,
     doctorID int NOT NULL,
+	quantity int NOT NULL,
     approved boolean NOT NULL,
     filled boolean NOT NULL,
     FOREIGN KEY (patientID) REFERENCES patientInfo(patientID),
     FOREIGN KEY (doctorID) REFERENCES doctorInfo(doctorID)
 );
+select * from prescriptionInfo;
+
 CREATE TABLE IF NOT EXISTS Inventory(
 	rxID int not null primary key,
+    rxName varchar(30) NOT NULL,
     quantity int not null,
     foreign key (rxID) REFERENCES medicationInfo(rxID)
 );
@@ -125,25 +129,22 @@ VALUES
     ('Medicine G', 'PharmaHealth');
 
 -- Adding 5 entries to prescriptionInfo table
-INSERT IGNORE INTO prescriptionInfo(prescriptionName, prescriptionDosage, prescriptionDate, patientID, doctorID, approved, filled)
+INSERT IGNORE INTO prescriptionInfo(prescriptionName, prescriptionDosage, prescriptionDate, patientID,quantity, doctorID, approved, filled)
 VALUES 
-    ('Prescription 3', 100, '2023-03-25', 2, 2, true, true),
-    ('Prescription 4', 25, '2023-04-10', 3, 3, false, false),
-    ('Prescription 5', 60, '2023-05-15', 4, 4, true, false),
-    ('Prescription 6', 40, '2023-06-20', 1, 5, true, false),
-    ('Prescription 7', 80, '2023-07-25', 1, 1, false, false);
+    ('Medicine C', 100, '2023-03-25',2, 10, 2, true, true),
+    ('Medicine D', 25, '2023-04-10',3, 10, 3, false, false),
+    ('Medicine C', 60, '2023-05-15',4, 10, 4, true, false),
+    ('Medicine E', 40, '2023-06-20',1, 10, 5, true, false),
+    ('Medicine G', 80, '2023-07-25',1, 10, 1, false, false);
 -- Adding 5 entries to Inventory table
 show tables;
-INSERT IGNORE INTO Inventory(rxID, quantity)
+INSERT IGNORE INTO Inventory(rxID, rxName, quantity)
 VALUES 
-    (1,200),
-    (2, 150),
-    (3, 300),
-    (4, 100),
-    (5, 250);
-
-
-
+    (1,'Medicine C',200),
+    (2,'Medicine D', 150),
+    (3,'Medicine E',300),
+    (4,'Medicine F',100),
+    (5,'Medicine G',250);
 
 
 ### Breadth of SQL
@@ -159,7 +160,8 @@ BEGIN
     WHERE doctorID = specDoctorID;
 END//
 DELIMITER ;
-
+CALL doctorSpecificPatients(5);
+select * from Inventory;
 ## 2) Stored procedure for a doctor to check which of their patients 
 ##  has a prescription that needs to be approved.
 drop procedure if exists doctorSpecificPendingScripts;
@@ -172,8 +174,8 @@ BEGIN
     WHERE pat.doctorID = specDoctorID AND approved = 0;
 END//
 DELIMITER ;
-CALL doctorSpecificPendingScripts(4);
-    
+CALL doctorSpecificPendingScripts(2);
+select * from doctorInfo;
 ## 3) Stored procedure to approve a prescription (i.e. change approval from 0 to 1)
 DELIMITER //
 CREATE PROCEDURE approveScript( IN specificPrescriptionID int)
@@ -183,7 +185,11 @@ BEGIN
     WHERE prescriptionID = specificPrescriptionID;
 END//
 DELIMITER ;
-
+CALL approveScript(5);
+select * from prescriptionInfo;
+UPDATE prescriptionInfo
+    SET approved = 0
+    WHERE prescriptionID = 5;
 ## 4) A stored procedure to remove prescriptions 
 ##
 DELIMITER //
@@ -193,6 +199,19 @@ BEGIN
 END//
 DELIMITER ;
 CALL removeScript(7); ##return 0 rows affected unless there are 7 values in the table.
+
+SELECT * FROM patientinfo as pat INNER JOIN prescriptionInfo as pre on pat.patientID = pre.patientID;
+## A procedure for patients to view their prescriptions
+DELIMITER //
+CREATE PROCEDURE patientPrescriptions( IN specificPatientID int)
+BEGIN
+	SELECT * FROM
+    (SELECT pat.patientID, pre.prescriptionName,pre.prescriptionDosage, pre.prescriptionDate, pre.quantity, pre.approved FROM patientinfo as pat INNER JOIN prescriptionInfo as pre ON pat.patientID = pre.patientID) 
+    as j
+    WHERE j.patientID = specificPatientID;
+END//
+DELIMITER ;
+CALL patientPrescriptions(1);
 ## VIEWS
 ## 1) A view for pharmacy staff to view all accepted scripts that ahven't been filled
 CREATE VIEW needToBeFilled AS
@@ -214,3 +233,24 @@ CREATE VIEW pharmacyOnlyLogin AS
 SELECT * FROM userLoginInfo
 WHERE userLoginInfo.personaCode = 3;
 SELECT * FROM pharmacyOnlyLogin;
+
+## trigger to update inventory when a prescription is added
+## to the prescriptionInfo table
+DELIMITER //
+
+CREATE TRIGGER updateInventory AFTER UPDATE ON prescriptionInfo
+FOR EACH ROW
+BEGIN
+    DECLARE prescriptionQuant INT;
+    
+    SELECT quantity INTO prescriptionQuant FROM prescriptionInfo WHERE prescriptionID = NEW.prescriptionID;
+
+    UPDATE Inventory
+    SET quantity = quantity - prescriptionQuant
+    WHERE rxID = (SELECT rxID FROM medicationInfo WHERE rxName = NEW.prescriptionName);
+END;
+//
+DELIMITER ;
+
+select * from Inventory;
+select * FROM prescriptionInfo;

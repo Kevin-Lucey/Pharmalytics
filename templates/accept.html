@@ -72,37 +72,17 @@ tr:nth-child(even) {
 <body>
     <div class="navbar" style="margin-left: 20px; margin-top: 20px;">
         <a href="{{url_for('prescriptionRequests')}}" style="margin-left:10px; margin-right: 10px">Prescription Requests</a>
+        <a href="{{url_for('sendpre')}}"style="margin-left:10px; margin-right: 10px">Send Prescription</a>
         <a href="{{url_for('logout')}}"style="margin-left:10px; margin-right: 10px">Log out</a>
         </div>
-    
-  
-
-    <div class="container">
-        <h1>Prescription Requests</h1>
-         <table class="worddark" style="text-align: center;">
-            <tr>
-                <th>Patient Name</th>
-                <th>Medication</th>
-                <th>Dosage</th>
-                <th>Request Date</th>
-            </tr>
-            {% for pend in pend %}
-            <tr>
-                <td>{{ pend['patientName'] }}</td>
-                <td>{{ pend['prescriptionName'] }}</td>
-                <td>{{ pend['prescriptionDosage'] }}</td>
-                <td>{{ pend['prescriptionDate'] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <div>
-            <a href="{{ url_for('accept')}}">Accept</a>
+        <div style="margin-left: 25px">
+            <h3>{{ msg}}</h3>
+            <h2>Enter prescription ID you'd like to accept</h2>
+            <form action="{{ url_for('accept')}}" method="post" autocomplete="off">
+                <input type="text" id="prescription_id" name="prescription_id">
+                <input type="Submit" class="btn" value="Submit">
+            </form>
         </div>
     </div>
 
-
-
-    </body>
-      
-
-{% endblock %}
+    {% endblock %}

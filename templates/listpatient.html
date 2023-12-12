@@ -78,16 +78,12 @@ tr:nth-child(even) {
          <table class="worddark">
             <tr>
                 <th>Patient Name</th>
-                <th>Date Of Birth</th>
-                <th>Gender</th>
-                <th>insurance ID</th>
+                <th>Patient's Doctor</th>
             </tr>
             {% for patient in patients %}
             <tr>
-                <td>{{ patient['Name'] }}</td>
-                <td>{{ patient['DateOfBirth'] }}</td>
-                <td>{{ patient['Gender'] }}</td>
-                <td>{{ patient['insuranceid'] }}</td>
+                <td>{{ patient['patientName'] }}</td>
+                <td>{{ patient['doctorName'] }}</td>             
             </tr>
             {% endfor %}
         </table>

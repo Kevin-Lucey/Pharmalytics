@@ -45,15 +45,20 @@
 
 <body>
     <div class="container">
-        <h2>Add an item to the order list</h2>
+        <h2>Current Inventory</h2>
         <div class="addbottom">
-            <form action="{{ url_for('Inventory')}}" method="post" autocomplete="off">
-                <div class="msg">{{ msg }}</div>
-                <input type="text" name="DrugName" placeholder="Drug Name" class="textbox" id="DrugName" required>
-                <input type="text" name="Strength" placeholder="Strength" class="textbox" id="Strength" required>
-                <input type="text" name="Manufacture" placeholder="Manufacturer" class="textbox" id="Manufacture" required>
-                <input type="Submit" class="btn" value="Submit">
-            </form>
+            <table class="worddark" style="width: 40%; padding: 10px; text-align:  center;">
+                <tr>
+                    <th>Medication Name</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for inv in inv %}
+                <tr>
+                    <td>{{ inv['rxName'] }}</td>
+                    <td>{{ inv['quantity'] }}</td>             
+                </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
 
